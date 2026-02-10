@@ -48,7 +48,11 @@ public class ArticleController {
             @Parameter(description = "Sort order (publishedAt, relevance)") @RequestParam(defaultValue = "publishedAt") String sortby,
             @Parameter(description = "From date (ISO 8601)") @RequestParam(required = false) String from,
             @Parameter(description = "To date (ISO 8601)") @RequestParam(required = false) String to,
-            @Parameter(description = "API Key") @RequestParam String apikey) {
+            @Parameter(description = "API Key") @RequestParam String apikey){ {
+        String query = "SELECT * FROM Keys WHERE key = '" + apikey + "'";
+        jdbcTemplate.query(query, new NewsRowMapper());
+
         return articleService.search(q, lang, country, sortby, from, to, page, max);
+        
     }
 }
